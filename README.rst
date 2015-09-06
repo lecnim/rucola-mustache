@@ -81,7 +81,7 @@ metadata (default: ``None``):
         Me
 
 partials (default: ``None``):
-    Partials directory relative to app path.
+    Partials directory relative to app path or dict like object.
 
     Project directory structure::
 
@@ -96,10 +96,21 @@ partials (default: ``None``):
     .. code-block:: python
 
         app.use(
-            Mustache(partials='./partials')
+            Mustache(partials='partials')
         )
 
     No you can use ``{{> header }}`` or ``{{> footer }}`` tags in ``page.html``.
+
+    ----
+
+    Also you can used ``dict`` like object like this:
+
+    .. code-block:: python
+
+        app.use(
+            Mustache(partials={'header': '<h1>Welcome</h1>',
+                               'footer': 'Author: Me'})
+        )
 
 
 License

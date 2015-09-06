@@ -3,7 +3,7 @@ import glob
 import pystache
 
 
-class PartialsFinder:
+class PartialsReader:
     """Finds partials files, regardless of a file extension.
     For example {{> next }} will match 'next.mustache', 'next.html', 'next.something' etc.
 
@@ -42,12 +42,12 @@ class Mustache:
 
     def __call__(self, app):
 
-        if self.partials:
-            pf = PartialsFinder(os.path.join(app.path, self.partials))
-        else:
+        if self.partials is None:
             pf = {}
-
-        r = pystache.Renderer(search_dirs='.', partials=pf, file_extension=False)
+        elif isinstance(self.partials, str):
+            pf = PartialsReader(os.path.join(app.path, self.partials))
+        else:
+            pf = self.partials
 
         for f in app.find(self.pattern):
 
@@ -57,4 +57,15 @@ class Mustache:
             else:
                 data = f
 
-            f.content = r.render(f.content, data)
+            f.content = render_mustache(f.content, data, partials=pf)
+
+
+def render_mustache(template, context=None, partials=None):
+
+    if isinstance(partials, str):
+        partials = PartialsReader(partials)
+    elif partials is None:
+        partials = {}
+
+    renderer = pystache.Renderer(partials=partials, file_extension=False)
+    return renderer.render(template, context)

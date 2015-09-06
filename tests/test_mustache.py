@@ -109,3 +109,15 @@ class Test(unittest.TestCase):
         )
 
         self.assertEqual('test', app.get('conflict.html').content)
+
+    def test_partials_object(self):
+
+        app = Rucola()
+        f = app.create('foo.html', content='{{# list }}{{> shout }}{{/ list }}')
+        f['list'] = ['dog', 'cat', 'bee']
+
+        app.use(
+            Mustache(partials={'shout': '{{.}}! '})
+        )
+
+        self.assertEqual('dog! cat! bee! ', app.get('foo.html').content)
