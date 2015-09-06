@@ -101,7 +101,7 @@ partials (default: ``None``):
 
     No you can use ``{{> header }}`` or ``{{> footer }}`` tags in ``page.html``.
 
-    ----
+
 
     Also you can used ``dict`` like object like this:
 
