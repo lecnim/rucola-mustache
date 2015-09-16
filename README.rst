@@ -20,17 +20,17 @@ package. If you use ``pip``, it will automatically install it for you.
 Usage
 -----
 
-A plugin contains 3 useful items: ``Mustache``, ``MustacheLayouts``
-and ``render_mustache()``.
+A plugin contains three useful items: `Mustache`_, `MustacheLayouts`_
+and `render_mustache()`_. Also look at `Using with other plugins`_
 
-Meet ``Mustache``
-~~~~~~~~~~~~~~~~~
+``Mustache``
+~~~~~~~~~~~~
 
 If you use ``Mustache`` class without arguments it will render
 a content of each ``html`` file using it metadata
 as a template context.
 
-For example, we have a file ``dog.html``:
+For example, we have a file ``src/dog.html``:
 
 .. code-block:: html
 
@@ -114,8 +114,8 @@ partials (default: ``None``):
 
 
 
-Meet ``MustacheLayouts``
-~~~~~~~~~~~~~~~~~~~~~~~~
+``MustacheLayouts``
+~~~~~~~~~~~~~~~~~~~
 
 If you use ``MustacheLayouts`` class without arguments it will render
 each ``html`` file. As a template it will use ``layout`` key from metadata,
@@ -183,8 +183,8 @@ metadata_key (default: 'layout')
     A metadata key where the plugin looks for a layout filename.
 
 
-Meet ``render_mustache()``
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+``render_mustache()``
+~~~~~~~~~~~~~~~~~~~~~
 
 You can use the ``render_mustache()`` function to render the given template string.
 
@@ -202,6 +202,44 @@ It also accepts ``File`` instances:
     >>> f = File('/hello', content='Hi {{ foo }}')
     >>> render_mustache(f, context={'foo': 'Banana!'})
     Hi Banana!
+
+
+Using with other plugins
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is good to use ``Mustache`` and ``MustacheLayouts`` with other plugins, for
+example like `YamlContext <https://github.com/lecnim/rucola-yamlfm/>`_.
+Let's see:
+
+Content of file ``src/fruit.html``:
+
+.. code-block:: html
+
+    """
+    title: Banana
+    """
+
+    Hello this page is about: {{ title }}
+
+And the python ``script.py``:
+
+.. code-block:: python
+
+    from rucola_yamlfm import YamlFrontmatter
+    from rucola_mustache import Mustache
+
+    app = Rucola('.')
+    app.use(
+        YamlFrontmatter(),
+        Mustache()
+    )
+    app.build()
+
+Result of ``build/fruit.html``:
+
+.. code-block:: html
+
+    Hello this page is about: Banana
 
 
 License
