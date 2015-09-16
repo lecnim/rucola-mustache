@@ -5,6 +5,9 @@ import pystache
 
 def render_mustache(template, context=None, partials=None):
 
+    if not isinstance(template, str):
+        template = template['content']
+
     if isinstance(partials, str):
         partials = PartialsReader(partials)
     elif partials is None:
