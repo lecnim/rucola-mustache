@@ -2,6 +2,9 @@
 rucola-mustache
 ===============
 
+.. image:: https://travis-ci.org/lecnim/rucola-mustache.svg
+    :target: https://travis-ci.org/lecnim/rucola-mustache
+
 A Rucola plugin used to render Mustache templates.
 
 Installation
