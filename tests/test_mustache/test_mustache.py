@@ -16,7 +16,7 @@ class Test(unittest.TestCase):
 
         app = Rucola()
         app.create('url.html', content='My path: {{ path }}')
-        app.create('url2.html', 'My path: {{ path }}')
+        app.create('url2.html', content='My path: {{ path }}')
         app.use(
             Mustache('url.html')
         )
@@ -29,8 +29,8 @@ class Test(unittest.TestCase):
 
         app = Rucola()
         app.create('url.html', content='My path: {{ path }}')
-        app.create('hello.html', 'My path: {{ path }}')
-        app.create('post.md', 'My path: {{ path }}')
+        app.create('hello.html', content='My path: {{ path }}')
+        app.create('post.md', content='My path: {{ path }}')
         app.use(
             Mustache()
         )
@@ -102,7 +102,7 @@ class Test(unittest.TestCase):
     def test_partials_name_conflict(self):
 
         app = Rucola(os.path.dirname(__file__))
-        app.create('conflict.html', '{{> same/foo }}')
+        app.create('conflict.html', content='{{> same/foo }}')
 
         app.use(
             Mustache(partials='partials')
